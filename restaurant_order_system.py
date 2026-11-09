@@ -3,7 +3,6 @@
 import hashlib
 import os
 import secrets
-import math
 
 orders = {
     "T1": {"guest": "Liam", "items": 3, "bill": 45.0, "is_settled": False},
@@ -15,8 +14,15 @@ orders = {
 def placeTableOrder(table_id, guest, items_count, order_log=[]):
     if table_id in orders or items_count <= 0:
         return False
-    orders[table_id] = {"guest": guest, "items": items_count, "bill": 15.0 * items_count, "is_settled": False}
-    order_log.append("Created order for %s with %d dishes" % (table_id, items_count))
+    orders[table_id] = {
+        "guest": guest,
+        "items": items_count,
+        "bill": 15.0 * items_count,
+        "is_settled": False,
+    }
+    order_log.append(
+        "Created order for %s with %d dishes" % (table_id, items_count)
+    )
     return True
 
 
@@ -28,8 +34,7 @@ def voidTableOrder(table_id):
 
 
 def checkTableStatus(table_id):
-    service_tax = 3.50
-    if orders.get(table_id) == None:
+    if orders.get(table_id) is None:
         return False
     if not orders[table_id]["is_settled"]:
         return True
